@@ -5,7 +5,7 @@ Parameters:
   TokenEndpoint:
     Type: String
     Description: OIDC Token Endpoint URL
-    Default: "https://example.com/oauth2/token"
+    Default: "https://oauth2.googleapis.com/token"
   ClientId:
     Type: String
     Description: OIDC Client ID
