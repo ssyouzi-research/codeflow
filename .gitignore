@@ -1,0 +1,6 @@
+.aws-sam
+node_modules
+.DS_Store
+.vscode
+.idea
+memo.txt

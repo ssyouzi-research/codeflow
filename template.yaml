@@ -1,0 +1,49 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+
+Parameters:
+  TokenEndpoint:
+    Type: String
+    Description: OIDC Token Endpoint URL
+    Default: "https://example.com/oauth2/token"
+  ClientId:
+    Type: String
+    Description: OIDC Client ID
+    Default: "your-client-id"
+  ClientSecret:
+    Type: String
+    Description: OIDC Client Secret
+    NoEcho: true
+    Default: "your-client-secret"
+  RedirectUri:
+    Type: String
+    Description: OIDC Redirect URI
+    Default: "https://yourapp.com/callback"
+
+Resources:
+  OidcCodeFlowFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: src/
+      Handler: index.handler
+      Runtime: nodejs22.x
+      Environment:
+        Variables:
+          TOKEN_ENDPOINT: !Ref TokenEndpoint
+          CLIENT_ID: !Ref ClientId
+          CLIENT_SECRET: !Ref ClientSecret
+          REDIRECT_URI: !Ref RedirectUri
+      FunctionUrlConfig:
+        AuthType: NONE
+        Cors:
+          AllowOrigins:
+            - "*"
+          AllowMethods:
+            - GET
+          AllowHeaders:
+            - "*"
+
+Outputs:
+  FunctionUrl:
+    Description: "Lambda Function URL"
+    Value: !GetAtt OidcCodeFlowFunctionUrl.FunctionUrl
